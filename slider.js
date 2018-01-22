@@ -50,6 +50,7 @@ export default {
     )
   },
   render (createElement) {
+    let self = this
     return createElement(
       'transition',
       {
@@ -63,15 +64,15 @@ export default {
           {
             'class': {
               'item': true,
-              'prev left': this.prev && !this.animated,
-              'next right': this.next && !this.animated,
-              'active': this.show && !this.animated,
-              'runEnter': this.show && this.animated,
-              'runLeave': !this.show && this.animated,
-              'item-animated': this.animated
+              'prev left': self.prev && !self.animated,
+              'next right': self.next && !self.animated,
+              'active': self.show && !self.animated,
+              'runEnter': self.show && self.animated,
+              'runLeave': !self.show && self.animated,
+              'item-animated': self.animated
             }
           },
-          this.$slots.default
+          self.$slots.default
         )
       ]
     )

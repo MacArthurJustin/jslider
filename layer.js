@@ -135,23 +135,22 @@ export default {
     }
   },
   render (createElement) {
+    let self = this
     return createElement(
       'div',
       {
         'class': {
           'layer-slide': true,
-          'transition-fast': this.fast,
-          'transition-slow': this.slow
+          'transition-fast': self.fast,
+          'transition-slow': self.slow
         },
         'style': {
-          'transform': 'translate3d(' + this.calcLeft + '%, ' + this.calcTop + '%, 0) rotate(' + this.calcRotation + 'deg) scale(' + this.calcScale + ')',
-          'transition-delay': this.calcDelay,
-          'transform-origin': this.calcOrigin
+          'transform': 'translate3d(' + self.calcLeft + '%, ' + self.calcTop + '%, 0) rotate(' + self.calcRotation + 'deg) scale(' + self.calcScale + ')',
+          'transition-delay': self.calcDelay,
+          'transform-origin': self.calcOrigin
         }
       },
-      [
-        createElement('div')
-      ]
+      self.$slots.default
     )
   }
 }

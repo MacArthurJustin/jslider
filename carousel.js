@@ -98,22 +98,25 @@ export default {
     }
   },
   render (createElement) {
+    var self = this
     let childElements = []
 
-    if (this.indicators || this.playPause) {
+    if (self.indicators || self.playPause) {
       let olChildren = []
 
-      if (this.playPause) {
+      if (self.playPause) {
         olChildren.push(
           createElement(
             'li',
             {
               'class': {
                 'carousel-slideshow-control': true,
-                'running': this.active
+                'running': self.active
               },
               on: {
-                click: this.StartSlideShow
+                click (event) {
+                  self.StartSlideShow()
+                }
               }
             },
             [
@@ -121,8 +124,7 @@ export default {
                 'i',
                 {
                   'class': {
-                    'glyphicon': true,
-                    'glyphicon-play': true
+                    'play-button': true
                   }
                 }
               )
@@ -131,19 +133,19 @@ export default {
         )
       }
 
-      if (this.indicators) {
-        this.indicator.map(
+      if (self.indicators) {
+        self.indicator.map(
           (item, index) => {
             olChildren.push(
               createElement(
                 'li',
                 {
                   'class': {
-                    'active': index === this.activeIndex
+                    'active': index === self.activeIndex
                   },
                   on: {
                     click (event) {
-                      this.handleIndicatorClick(index)
+                      self.handleIndicatorClick(index)
                     }
                   }
                 },
@@ -154,17 +156,19 @@ export default {
         )
       }
 
-      if (this.playPause) {
+      if (self.playPause) {
         olChildren.push(
           createElement(
             'li',
             {
               'class': {
                 'carousel-slideshow-control': true,
-                'running': !this.active
+                'running': !self.active
               },
               on: {
-                click: this.PauseSlideshow
+                click (event) {
+                  self.PauseSlideshow()
+                }
               }
             },
             [
@@ -172,8 +176,7 @@ export default {
                 'i',
                 {
                   'class': {
-                    'glyphicon': true,
-                    'glyphicon-pause': true
+                    'pause-button': true
                   }
                 }
               )
@@ -200,7 +203,7 @@ export default {
         'div',
         {
           'class': {
-            'container': this.bootstrap
+            'container': self.bootstrap
           }
         },
         [
@@ -211,20 +214,20 @@ export default {
                 'carousel-inner': true
               },
               'style': {
-                'height': this.height + 'px'
+                'height': self.height + 'px'
               },
               'attrs': {
                 'role': 'listbox'
               },
               'ref': 'inner'
             },
-            this.$slots.default
+            self.$slots.default
           )
         ]
       )
     )
 
-    if (this.show) {
+    if (self.show) {
       childElements.push(
         createElement(
           'a',
@@ -233,7 +236,9 @@ export default {
               'left carousel-control': true
             },
             on: {
-              click: this.prevClick
+              click (event) {
+                self.prevClick()
+              }
             }
           },
           [
@@ -268,7 +273,9 @@ export default {
               'right carousel-control': true
             },
             on: {
-              click: this.nextClick
+              click (event) {
+                self.nextClick()
+              }
             }
           },
           [
@@ -301,12 +308,12 @@ export default {
       'div',
       {
         'class': {
-          'slide': true,
-          'animate-fast': this.fast,
-          'animate-slow': this.slow
+          'carousel slide': true,
+          'animate-fast': self.fast,
+          'animate-slow': self.slow
         },
         'style': {
-          'height': this.height + 'px',
+          'height': self.height + 'px',
           'position': 'relative'
         },
         'ref': 'carousel'
